@@ -1,13 +1,20 @@
-package com.katlex.vitrina.goods
 
+package com.katlex.vitrina.goods
+import org.mortbay.log.Log;
+
+
+import com.katlex.vitrina.goods.GoodsNavigationService;
 class GoodsHelpTagLib {   
 	
+	GoodsNavigationService goodsNavigationService
 	def SecurityService
 	
 	def goodsOwner = { attrs, body ->
-		
-		if (attrs.goods?.owner ==  SecurityService.currentUser() ) {
+	 def current = goodsNavigationService.currentGoods
+
+	 if (SecurityService.currentUser().equals(current.owner)) {
 			out << body()
+
 		}
 	}
 	

@@ -99,8 +99,8 @@ log4j = {
 
     warn   'org.mortbay.log'
 	
-	debug   stderr:'com.katlex'
-	
+	debug  'com.katlex.vitrina.goods','grails-app/services'
+	       
 
 }
 

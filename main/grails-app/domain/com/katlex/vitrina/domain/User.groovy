@@ -1,8 +1,17 @@
 package com.katlex.vitrina.domain
 
 class User {
-    String username
+    @Override
+	public boolean equals(Object obj) {
+		 obj instanceof User
+ 		 User user = (User)obj
+		return user.id == this.id;
+	}
+
+	String username
     String passwordHash
+	
+
 	
     static hasMany = [ roles: Role, permissions: String ]
    	static mapping = {

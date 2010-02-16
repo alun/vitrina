@@ -18,7 +18,7 @@ class Goods {
 	
 	byte [] imageBytes
     String imageType
-	
+	Boolean asserted = true
 //	String file
 	String description
 	String name

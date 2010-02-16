@@ -49,10 +49,10 @@ class BootStrap {
 					
 					if( totalFiles > 0 ) {
 						[
-							[name:"Пылесос",description:"Производитель: Samsung",owner:User.findByUsername('alun')],
-							[name:"ПК",description:"Pentium III",owner:User.findByUsername('tork01')],
-							[name:"ПК",description:"Pentium II",owner:User.findByUsername('alun')],
-							[name:"ПК",description:"Pentium I",owner:User.findByUsername('tork01')]
+							[name:"Пылесос",description:"Производитель: Samsung",owner:User.findByUsername('alun'),asserted: false],
+							[name:"торков дивайс",description:"Pentium III",owner:User.findByUsername('tork01'),asserted: true],
+							[name:"алунов дивайс",description:"Pentium II",owner:User.findByUsername('alun'),asserted: true],
+							[name:"ПК",description:"Pentium I",owner:User.findByUsername('tork01'),asserted: false]
 								
 						].each {
 							
@@ -95,7 +95,7 @@ class BootStrap {
 
     	
 		user = new User(username: "alun", passwordHash: new Sha1Hash("lex").toHex())
-		[ Role.ANONYMOUS, Role.REGISTERED, Role.MODERATOR, Role.VALIDATED ].each {
+		[ Role.ANONYMOUS, Role.REGISTERED, Role.VALIDATED ].each {
     		user.addToRoles( it )
 		}
 		user.save()
@@ -114,6 +114,7 @@ class BootStrap {
 		)
 		user.addToPermissions( Permission.ANONYMOUS )
 		user.addToRoles( Role.ANONYMOUS )
+       
 		user.save()		
 	}
 
@@ -147,7 +148,7 @@ class BootStrap {
 		createMenu( path: "goods.view",
 				sequencer: 1,
 				type: MenuItemType.ACTION,
-				command: "goods.show",
+				command: "goods.showAllGoods",
 
 		)
 				

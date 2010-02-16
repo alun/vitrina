@@ -7,15 +7,18 @@ import org.mortbay.log.Log;
 import java.awt.image.renderable.RenderableImage;
 import java.util.Set;
 import com.katlex.vitrina.domain.Goods;
+import com.katlex.vitrina.goods.GoodsNavigationService;
+import com.katlex.vitrina.goods.GoodsListService;
 import com.katlex.vitrina.domain.User;
 import com.sun.xml.internal.ws.handler.HandlerProcessor.Direction;
 
 class GoodsController {
 	
-	def goodsNavigationService
-	
+	GoodsNavigationService goodsNavigationService
+	GoodsListService goodsListService
 	
     def index = { 
+		
 		redirect(action:"show")
 	}
 	def list = {
@@ -23,48 +26,57 @@ class GoodsController {
 		[ GoodsInstanceList: Goods.list( params ), GoodsInstanceTotal: Goods.count() ]
 	}
 	def showMine = {
-		if( ! goodsNavigationService.currentGoods ) {
+		if( ! GoodsNavigationService.currentGoods ) {
 			forward action:"next"}
 		
 		
 		def ownedGoods = Goods.findAllByOwner(User.findByUsername( SecurityUtils.subject.principal) )
-		log.debug "GOODS ==============================================${Goods.list().name}"
 		
-		log.debug "MINEGOODS ==============================================${ownedGoods}"
-		goodsNavigationService.goodsList = ownedGoods
+		
+	
+		goodsNavigationService.currentGoods = ownedGoods
 		
 		redirect(action:show)
 		
-		
-		
-		
+	
 	}
-		
+	
+    def showAllGoods ={
+		goodsListService.allGoods()
+		redirect action:"show"
+	}
 	def show = {
-		if( ! goodsNavigationService.currentGoods ) {
-			forward action:"next"
-		}
+		//if( ! goodsNavigationService.currentGoods ) {
+		//	forward action:"next"
+		//}
 		
-		[ goods : goodsNavigationService.currentGoods ]
+		
+		goodsNavigationService.goodsCurrentPosition()
+		def cu = goodsNavigationService.currentGoods
+        log.debug "=====================POSITION====================${cu}"
+	
+		[ goods : cu ]
 	}
 	
 	def delete = {
-		def goodsInstance = goodsNavigationService.currentGoods
-		if(goodsInstance) {
-			try {
-				goodsInstance.delete(flush:true)
-                log.debug "good ${params.id} deleted"
-				redirect(action:show)
-			}
-			catch(org.springframework.dao.DataIntegrityViolationException e) {
-				log.debug "this goood ${params.id} could not be deleted"
-				redirect(action:show,id:params.id)
-			}
-		}
-		else {
-			log.debug "Good not found with id ${params.id}"
-			redirect(action:show)
-		}
+		goodsNavigationService.removeCurrentGoodsFromList()
+        redirect(action:"show", id:goodsNavigationService.nextGoodsId())
+//		def goodsInstance = goodsNavigationService.currentGoods
+//		if(goodsInstance) {
+//			try {
+//				goodsInstance.delete(flush:true)
+//                log.debug "good ${params.id} deleted"
+//				redirect(action:show)
+//			}
+//			catch(org.springframework.dao.DataIntegrityViolationException e) {
+//				log.debug "this goood ${params.id} could not be deleted"
+//				redirect(action:show,id:params.id)
+//			}
+//		}
+//		else {
+//			log.debug "Good not found with id ${params.id}"
+//			redirect(action:show)
+//		}
 	}
 	
 	def edit = {
@@ -106,13 +118,13 @@ class GoodsController {
 		}
 	}
 	def next = {
-		goodsNavigationService.doStep "forward"
-		redirect action:"show"
+		
+		redirect(action:"show", id:goodsNavigationService.nextGoodsId())
 	}
 	
 	def prev = {
-		goodsNavigationService.doStep "backward"
-		redirect action:"show"
+		
+		redirect(action:"show", id:goodsNavigationService.prevGoodsId() )
 	}
 	
 	def image = {
@@ -172,7 +184,7 @@ class GoodsController {
 			render ""
 		} else {
 			log.debug "The id is ${goods.id}"
-			goodsNavigationService.currentGoods = goods
+			GoodsNavigationService.currentGoods = goods
 			redirect (action:show)
 		}
 	}

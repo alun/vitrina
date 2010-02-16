@@ -1,0 +1,4 @@
+class SimpleController {
+
+    def index = { }
+}

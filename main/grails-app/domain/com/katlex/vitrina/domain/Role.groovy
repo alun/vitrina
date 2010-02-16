@@ -7,7 +7,7 @@ class Role {
 	static final Role ANONYMOUS = new Role(
 		name:"ANONYMOUS",
 		permissions:[
-		    "goods:show,prev,next,index,list,image",
+		    "goods:show,showAllGoods,prev,next,index,list,image",
 			"auth:login",
 			"registration:*",
 			"jcaptcha:*","menu:*" 

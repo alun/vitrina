@@ -11,7 +11,7 @@
 		<g:link action="next">&gt;</g:link>
 		<g:notAnonymous>
 		
-		 <g:goodsOwner goods="${goods}">
+		 <g:goodsOwner>
 	
 			  <div class="principal">
 	          	Это ваш товар,  
@@ -23,7 +23,7 @@
 		<li><g:link controller="goods" action="delete">удалить товар</g:link></li>
 		<li><g:link controller="goods" action="edit">редактировать данные</g:link></li>
 		<li><g:link controller="goods" action="update">обновить</g:link></li>
-	</g:goodsOwner>
+	     </g:goodsOwner>
 		</g:notAnonymous>
 	</div>
 	
