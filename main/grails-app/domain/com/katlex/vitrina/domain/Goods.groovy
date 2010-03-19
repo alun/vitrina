@@ -1,7 +1,12 @@
 package com.katlex.vitrina.domain
 
 class Goods {
- 
+	public boolean equals(Object obj) {
+		obj instanceof Goods
+		Goods goods = (Goods)obj
+		return goods.id == this.id;
+		
+	}
     static constraints = {
 		name blank: false, nullable: false
 		imageBytes nullable: false
@@ -22,6 +27,7 @@ class Goods {
 //	String file
 	String description
 	String name
+	String reason = ""
 	
 }
 

@@ -99,7 +99,7 @@ log4j = {
 
     warn   'org.mortbay.log'
 	
-	debug  'com.katlex.vitrina.goods','grails-app/services'
+	debug  'com.katlex.vitrina.goods',"grails-app.taglib"
 	       
 
 }

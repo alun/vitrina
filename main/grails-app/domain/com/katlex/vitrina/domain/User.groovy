@@ -10,7 +10,7 @@ class User {
 
 	String username
     String passwordHash
-	
+	Boolean blocked = false
 
 	
     static hasMany = [ roles: Role, permissions: String ]

@@ -16,7 +16,7 @@ class Role {
 	static final Role REGISTERED = new Role(
 		name:"REGISTERED",
 		permissions:[
-		    "goods:create,save,update,delete",
+		    "goods:create,save,update,delete,showMine",
 			"auth:signOut",
 		    Permission.NOT_ANONYMOUS
 		] )
@@ -27,7 +27,7 @@ class Role {
 	
 	static final Role MODERATOR  = new Role(
 	    name:"MODERATOR",
-		permissions:[] )
+		permissions:["goods:moderate,assertGoods,unAssertGoods","user:list,moderateUsers"] )
 	
 	
     String name

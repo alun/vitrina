@@ -7,7 +7,8 @@ import org.mortbay.log.Log;
 public class ListViewStateService {
 	
 	static final String CURRENT_GOODS_ID = "currentId"
-	static final String CURRENT_LIST = "currentList"			
+	static final String CURRENT_LIST = "currentList"
+		static final String MOD_LIST = "moderateList"
 
 	Session getCurrentSession() {
 		SecurityUtils.subject.session
@@ -25,7 +26,12 @@ public class ListViewStateService {
 				duplicates ->  list.removeAll( duplicates ) }  
 			return list
 			}
-	
+	def getModerateList(){
+		return currentSession.getAttribute(MOD_LIST);
+	}
+	def setModerateList(List list){
+		return currentSession.setAttribute(MOD_LIST, list);
+	}
 	def getCurrentGoodsId() {
 		return currentSession.getAttribute( CURRENT_GOODS_ID );
 	}

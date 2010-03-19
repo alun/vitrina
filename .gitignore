@@ -1,0 +1,7 @@
+main/.classpath
+main/.project
+main/.settings
+main/target
+main/web-app/WEB-INF/classes
+main/prodDb.*
+plugins

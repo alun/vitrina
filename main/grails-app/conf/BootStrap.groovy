@@ -50,9 +50,9 @@ class BootStrap {
 					if( totalFiles > 0 ) {
 						[
 							[name:"Пылесос",description:"Производитель: Samsung",owner:User.findByUsername('alun'),asserted: false],
-							[name:"торков дивайс",description:"Pentium III",owner:User.findByUsername('tork01'),asserted: true],
+							[name:"торков дивайс",description:"Pentium III",owner:User.findByUsername('1'),asserted: true],
 							[name:"алунов дивайс",description:"Pentium II",owner:User.findByUsername('alun'),asserted: true],
-							[name:"ПК",description:"Pentium I",owner:User.findByUsername('tork01'),asserted: false]
+							[name:"ПК",description:"Pentium I",owner:User.findByUsername('1'),asserted: false]
 								
 						].each {
 							
@@ -100,7 +100,7 @@ class BootStrap {
 		}
 		user.save()
 		
-		user = new User(username: "tork01", passwordHash: new Sha1Hash("gerodot").toHex())
+		user = new User(username: "1", passwordHash: new Sha1Hash("1").toHex())
 		[ Role.ANONYMOUS, Role.REGISTERED, Role.MODERATOR, Role.VALIDATED ].each {
 			user.addToRoles( it )
 		}
@@ -190,7 +190,18 @@ class BootStrap {
 				command:"auth.signOut",
 				permissions: [Permission.NOT_ANONYMOUS]
 		)
-				
+		createMenu( path: "moderate",
+		        sequencer: 7,
+		        type: MenuItemType.ACTION,
+		        command:"goods.moderate",
+		        permissions: [Permission.NOT_ANONYMOUS]
+		)				
+		createMenu( path: "moderateUser",
+				sequencer: 8,
+				type: MenuItemType.ACTION,
+				command:"user.moderateUsers",
+				permissions: [Permission.NOT_ANONYMOUS]
+				)				
 
 		
 																
